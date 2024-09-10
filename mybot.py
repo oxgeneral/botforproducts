@@ -5,7 +5,7 @@ import schedule
 import time
 from datetime import datetime
 from telegram import Bot, Update
-from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext, ConversationHandler
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, CallbackContext, ConversationHandler
 import asyncio
 import logging
 import sqlite3
@@ -20,13 +20,13 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Определение состояний для ConversationHandler
+# Определение состояний для ConversationHandlerç
 ADDING_TASK = 1
 ADDING_REGRESS_PRODUCT = 2
 
 class NotificationBot:
     def __init__(self, token):
-        self.application = Application.builder().token(token).build()
+        self.application = ApplicationBuilder().token(token).build()
         self.conn_tasks = sqlite3.connect('tasks.db')
         self.conn_notifications = sqlite3.connect('notifications.db')
         self.create_tables()
@@ -242,7 +242,7 @@ class NotificationBot:
     def schedule_notification(self, chat_id, time):
         # Планирование уведомления
         schedule.every().day.at(time).do(self.schedule_notify, chat_id=chat_id)
-        logger.info(f"Уведомление для чата {chat_id} запланировано на {time}")
+        logger.info(f"Уведомление для чата {chat_id} запланровано на {time}")
 
     def schedule_all_notifications(self):
         # Планирование всех уведомлений из базы данных
